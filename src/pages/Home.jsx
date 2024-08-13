@@ -34,9 +34,9 @@ export default function Home() {
                 src="https://nextui.org/images/hero-card-complete.jpeg"
               />
             </CardBody>
-            <CardFooter className="text-small flex flex-col gap-4 items-start">
+            <CardFooter className="text-small flex flex-col gap-3 items-start">
               <div className="flex items-center justify-between w-full">
-                <b>Lofi girl</b>
+                <span className="text-xl">Lofi girl</span>
                 <div className="flex items-center gap-5">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
