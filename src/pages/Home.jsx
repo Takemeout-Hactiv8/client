@@ -4,10 +4,13 @@ import {
   CardFooter,
   Image,
   Button,
+  useDisclosure,
 } from "@nextui-org/react";
 import { RoomCard } from "../components/Cards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AddModal from "../components/Modal";
 export default function Home() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
     <>
       <section>
@@ -50,7 +53,7 @@ export default function Home() {
           <div className="flex flex-col gap-12 pt-10 border-t">
             <div className="flex items-center justify-between">
               <h1 className="text-3xl">Rooms</h1>
-              <Button className="bg-primary text-white">
+              <Button onPress={onOpen} className="bg-primary text-white">
                 <FontAwesomeIcon icon="fa-solid fa-plus" />
                 Add Room
               </Button>
@@ -73,6 +76,7 @@ export default function Home() {
             </div> */}
           </div>
         </div>
+        <AddModal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onOpenChange} />
       </section>
     </>
   );
