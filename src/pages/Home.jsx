@@ -1,9 +1,78 @@
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  Image,
+  Button,
+} from "@nextui-org/react";
+import { RoomCard } from "../components/Cards";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Home() {
   return (
     <>
       <section>
-        <h1>ini halaman home</h1>
-        <p>isi nya chat room yang ada, public atau private</p>
+        <div className="flex flex-col gap-12">
+          <Card
+            shadow="sm"
+            isPressable
+            onPress={() => console.log("item pressed")}
+          >
+            <CardBody className="overflow-visible p-0">
+              <Image
+                isZoomed
+                shadow="sm"
+                width="100%"
+                alt="apa aja"
+                className="w-full object-cover h-[350px]"
+                src="https://nextui.org/images/hero-card-complete.jpeg"
+              />
+            </CardBody>
+            <CardFooter className="text-small flex flex-col gap-4 items-start">
+              <div className="flex items-center justify-between w-full">
+                <b>Lofi girl</b>
+                <div className="flex items-center gap-5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                    <span>500.000 Online</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-black"></div>
+                    <span>940.000 Members</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-default-500">
+                The friendlist community on Discord 🧡 Join now to meet amazing
+                people from all around the world 🌍
+              </p>
+            </CardFooter>
+          </Card>
+          <div className="flex flex-col gap-12 pt-10 border-t">
+            <div className="flex items-center justify-between">
+              <h1 className="text-3xl">Rooms</h1>
+              <Button className="bg-primary text-white">
+                <FontAwesomeIcon icon="fa-solid fa-plus" />
+                Add Room
+              </Button>
+            </div>
+            <div className="grid grid-cols-4 gap-7">
+              <RoomCard />
+              <RoomCard />
+              <RoomCard />
+              <RoomCard />
+              <RoomCard />
+              <RoomCard />
+              <RoomCard />
+              <RoomCard />
+              <RoomCard />
+              <RoomCard />
+            </div>
+            {/* kalo belom ada room */}
+            {/* <div className="flex items-center justify-center">
+              <h1> you dont have any rooms</h1>
+            </div> */}
+          </div>
+        </div>
       </section>
     </>
   );

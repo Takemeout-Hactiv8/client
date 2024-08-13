@@ -4,15 +4,15 @@ import Welcome from "./pages/Welcome";
 import Home from "./pages/Home";
 export const router = createBrowserRouter([
   {
+    path: "/",
+    loader: () => {
+      return localStorage.getItem("user") ? redirect("/home") : null;
+    },
+    element: <Welcome />,
+  },
+  {
     element: <MainLayout />,
     children: [
-      {
-        path: "/",
-        loader: () => {
-          return localStorage.getItem("user") ? redirect("/home") : null;
-        },
-        element: <Welcome />,
-      },
       {
         path: "/home",
         loader: () => {
