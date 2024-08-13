@@ -2,6 +2,7 @@ import { createBrowserRouter, redirect } from "react-router-dom";
 import MainLayout from "./layouts/Main";
 import Welcome from "./pages/Welcome";
 import Home from "./pages/Home";
+import Public from "./pages/Public";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -12,13 +13,21 @@ export const router = createBrowserRouter([
   },
   {
     element: <MainLayout />,
+    loader: () => {
+      return !localStorage.getItem("user") ? redirect("/") : null;
+    },
     children: [
       {
         path: "/home",
-        loader: () => {
-          return !localStorage.getItem("user") ? redirect("/") : null;
-        },
         element: <Home />
+      },
+      {
+        path: "/public",
+        element: <Public />
+      },
+      {
+        path: "/private",
+        element: <Public />
       },
     ],
   },

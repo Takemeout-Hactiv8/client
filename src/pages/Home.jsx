@@ -9,8 +9,10 @@ import {
 import { RoomCard } from "../components/Cards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddModal from "../components/Modal";
+import { Link, useNavigate } from "react-router-dom";
 export default function Home() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const nav = useNavigate();
   return (
     <>
       <section>
@@ -18,7 +20,9 @@ export default function Home() {
           <Card
             shadow="sm"
             isPressable
-            onPress={() => console.log("item pressed")}
+            onPress={() => {
+              nav("/public");
+            }}
           >
             <CardBody className="overflow-visible p-0">
               <Image
@@ -44,10 +48,19 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <p className="text-default-500">
-                The friendlist community on Discord 🧡 Join now to meet amazing
-                people from all around the world 🌍
-              </p>
+              <div className="flex justify-between items-center w-full">
+                <p className="text-default-500">
+                  The friendlist community on Discord 🧡 Join now to meet
+                  amazing people from all around the world 🌍
+                </p>
+                <Button
+                  as={Link}
+                  to="/public"
+                  className="bg-primary text-white"
+                >
+                  Join
+                </Button>
+              </div>
             </CardFooter>
           </Card>
           <div className="flex flex-col gap-12 pt-10 border-t">
@@ -76,7 +89,11 @@ export default function Home() {
             </div> */}
           </div>
         </div>
-        <AddModal isOpen={isOpen} onOpenChange={onOpenChange} onClose={onOpenChange} />
+        <AddModal
+          isOpen={isOpen}
+          onOpenChange={onOpenChange}
+          onClose={onOpenChange}
+        />
       </section>
     </>
   );

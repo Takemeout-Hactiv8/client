@@ -6,10 +6,18 @@ import {
   Image,
   Button,
 } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
 export const RoomCard = () => {
+  const nav = useNavigate();
   return (
     <>
-      <Card shadow="sm" isPressable onPress={() => console.log("item pressed")}>
+      <Card
+        shadow="sm"
+        isPressable
+        onPress={() => {
+          nav("/private");
+        }}
+      >
         <CardBody className="overflow-visible p-0">
           <Image
             isZoomed
