@@ -35,7 +35,7 @@ export default function Welcome() {
   };
   return (
     <>
-      <section>
+      <section className="p-4 h-screen flex flex-col items-center justify-center">
         <div className="flex flex-col items-center justify-center gap-12">
           <div className="flex flex-col items-center justify-center gap-3">
             <h1 className="text-3xl">Welcome</h1>

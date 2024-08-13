@@ -3,8 +3,11 @@ import { Outlet } from "react-router-dom";
 export default function MainLayout() {
   return (
     <>
-      <div className="h-screen flex flex-row items-center justify-center gap-12">
-        <Outlet />
+      <div className="p-4 md:px-12 md:py-7 md:mx-9 h-screen">
+        {/* <Navbar /> */}
+        <div className="flex flex-col gap-y-10">
+          <Outlet />
+        </div>
       </div>
     </>
   );

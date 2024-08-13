@@ -7,7 +7,17 @@ export default {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary': '#7678ed',
+        'secondary': '#ff7a55',
+        'white': '#f9fafc',
+        'black': '#202022',
+      },
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+      },
+    },
   },
   darkMode: "class",
   plugins: [nextui()],
