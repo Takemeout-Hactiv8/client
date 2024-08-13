@@ -3,6 +3,7 @@ import MainLayout from "./layouts/Main";
 import Welcome from "./pages/Welcome";
 import Home from "./pages/Home";
 import Public from "./pages/Public";
+import Private from "./pages/Private";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/private",
-        element: <Public />
+        element: <Private />
       },
     ],
   },
