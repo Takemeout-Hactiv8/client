@@ -3,8 +3,17 @@ import UserList from "../components/UserList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import ChatSender, { ChatReceiver } from "../components/Chat";
+import { useState } from "react";
 
 export default function Public() {
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!message) return;
+    console.log(message);
+    setMessage("");
+  };
   return (
     <>
       <section>
@@ -50,8 +59,20 @@ export default function Public() {
                 <ChatReceiver />
               </div>
               <div className="flex items-center gap-2">
-                <Input type="text" placeholder="Enter your message"/>
+                <Input
+                  type="text"
+                  placeholder="Enter your message"
+                  name="message"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSubmit(e);
+                    }
+                  }}
+                />
                 <Button
+                  onClick={(e) => handleSubmit(e)}
                   isIconOnly
                   className="bg-[#e5e5ff]"
                   variant="flat"
