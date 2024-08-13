@@ -17,7 +17,7 @@ export default function Public() {
   return (
     <>
       <section>
-        <div className="grid grid-cols-5 my-3 gap-5">
+        <div className="grid grid-cols-5 gap-5">
           <div className="flex flex-col gap-3 col-span-1 max-h-screen overflow-y-auto">
             <Input
               type="text"
