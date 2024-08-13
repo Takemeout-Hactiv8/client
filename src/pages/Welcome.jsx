@@ -8,6 +8,8 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 export default function Welcome() {
   const nav = useNavigate();
   const [formData, setFormData] = useState({
@@ -24,8 +26,12 @@ export default function Welcome() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("user", JSON.stringify(formData));
-    nav("/home");
+    if (!formData.email || !formData.gender) {
+      toast.error("Please fill out all the fields");
+    } else {
+      localStorage.setItem("user", JSON.stringify(formData));
+      nav("/home");
+    }
   };
   return (
     <>
