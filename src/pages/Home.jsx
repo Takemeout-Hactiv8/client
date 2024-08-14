@@ -10,7 +10,12 @@ import { RoomCard } from "../components/Cards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddModal from "../components/Modal";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
+
 export default function Home() {
+  const { theme, currentTheme, changeTheme } = useContext(ThemeContext)
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const nav = useNavigate();
   return (
@@ -56,7 +61,7 @@ export default function Home() {
                 <Button
                   as={Link}
                   to="/public"
-                  className="bg-primary text-white"
+                  className={`bg-${theme[currentTheme].buttonColor} ${theme[currentTheme].buttonTextColor}`}
                 >
                   Join
                 </Button>
@@ -66,7 +71,7 @@ export default function Home() {
           <div className="flex flex-col gap-12 pt-10 border-t">
             <div className="flex items-center justify-between">
               <h1 className="text-3xl">Rooms</h1>
-              <Button onPress={onOpen} className="bg-primary text-white">
+              <Button onPress={onOpen} className={`bg-${theme[currentTheme].buttonColor} ${theme[currentTheme].buttonTextColor}`}>
                 <FontAwesomeIcon icon="fa-solid fa-plus" />
                 Add Room
               </Button>
