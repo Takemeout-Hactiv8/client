@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
         element: <Public />
       },
       {
-        path: "/private",
+        path: "/private/:roomName",
         element: <Private />
       },
     ],

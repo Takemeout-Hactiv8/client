@@ -7,16 +7,14 @@ import {
   Button,
 } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-export const RoomCard = () => {
+export const RoomCard = ( { onPress, user, name } ) => {
   const nav = useNavigate();
   return (
     <>
       <Card
         shadow="sm"
         isPressable
-        onPress={() => {
-          nav("/private");
-        }}
+        onPress={onPress}
       >
         <CardBody className="overflow-visible p-0">
           <Image
@@ -30,11 +28,11 @@ export const RoomCard = () => {
         </CardBody>
         <CardFooter className="text-small flex flex-col gap-4 items-start">
           <div className="flex flex-col items-start gap-3">
-            <span className="text-lg">Lofi girl</span>
+            <span className="text-lg">{name}</span>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span className="text-xs">500.000 Online</span>
+                <span className="text-xs">{user} Online</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-black"></div>
