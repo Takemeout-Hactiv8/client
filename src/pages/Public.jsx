@@ -8,10 +8,10 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import socket from "../socket";
 
 export default function Public() {
-  const { theme, currentTheme, changeTheme } = useContext(ThemeContext)
+  const { theme, currentTheme, changeTheme } = useContext(ThemeContext);
 
   const [message, setMessage] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [chatShow, setChatShow] = useState([]);
   const [user, setUser] = useState([]);
 
@@ -20,53 +20,53 @@ export default function Public() {
   const sendChat = (event) => {
     event.preventDefault();
 
-    socket.emit('sendChat', message, roomName);
+    socket.emit("sendChat", message, roomName);
 
     setMessage("");
-  }
+  };
 
   const back = () => {
-    socket.emit('global-room-out', roomName)
-    navigate('/home')
-  }
+    socket.emit("global-room-out", roomName);
+    navigate("/home");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!message) return;
-    socket.emit('sendChat', message, roomName, localStorage.username);
+    socket.emit("sendChat", message, roomName, localStorage.username);
     // console.log(message);
     setMessage("");
   };
 
   useEffect(() => {
-    console.log(user, '====>user')
+    console.log(user, "====>user");
     // joinRoom();
-    socket.emit('join-global', roomName, socket.id);
+    socket.emit("join-global", roomName, socket.id);
 
-    socket.on('chat-update', (chat) => {
+    socket.on("chat-update", (chat) => {
       // chatTemp.push(chat);
       setChatShow((lastValue) => {
         // console.log(chat)
-        return lastValue.concat(chat)
+        return lastValue.concat(chat);
       });
-    })
+    });
 
-    socket.on('room-user', (userOnline) => {
+    socket.on("room-user", (userOnline) => {
       setUser(userOnline.user);
-    })
+    });
 
     return () => {
-      socket.off('chat-update');
-      socket.off('update-room');
-      socket.off('join-room');
-      socket.off('room-user');
-    }
+      socket.off("chat-update");
+      socket.off("update-room");
+      socket.off("join-room");
+      socket.off("room-user");
+    };
   }, []);
   return (
     <>
       <section>
         <div className="grid grid-cols-5 gap-5">
-          <div className="flex flex-col gap-3 col-span-1 max-h-screen overflow-y-auto">
+          <div className="flex flex-col gap-3 col-span-1 max-h-[80vh] overflow-hidden overflow-y-auto">
             <Input
               type="text"
               placeholder="Search"
@@ -78,17 +78,20 @@ export default function Public() {
               }
             />
             {user.map((e, i) => {
-              return <UserList
-                key={i}
-                name={e.name}
-              />
+              return <UserList key={i} name={e.name} gender={e.gender} />;
             })}
           </div>
           <div className="col-span-4 w-full">
             <div className="flex items-center justify-between bg-[#e5e5ff] p-5 rounded-xl">
               <div>
-                <h1 className={`text-3xl ${theme[currentTheme].textColorChat}`}>{roomName}</h1>
-                <span className={`text-sm ${theme[currentTheme].textColorChat}`}>{user.length} online</span>
+                <h1 className={`text-3xl ${theme[currentTheme].textColorChat}`}>
+                  {roomName}
+                </h1>
+                <span
+                  className={`text-sm ${theme[currentTheme].textColorChat}`}
+                >
+                  {user.length} online
+                </span>
               </div>
               <Button
                 as={Link}
@@ -101,13 +104,14 @@ export default function Public() {
                 <FontAwesomeIcon icon="fa-solid fa-arrow-left" />
               </Button>
             </div>
-            <div className="flex flex-col gap-5 mb-5">
+            <div className="flex flex-col gap-5 h-[70vh]">
               <div className="w-full my-5 max-h-screen overflow-y-auto flex flex-col gap-5">
                 {chatShow.map((e, i) => {
-                  return e.sender === socket.id ?
+                  return e.sender === socket.id ? (
                     <ChatSender key={i} message={e.chat} />
-                    :
+                  ) : (
                     <ChatReceiver key={i} message={e.chat} name={e.name} />
+                  );
                 })}
               </div>
               <div className="flex items-center gap-2">

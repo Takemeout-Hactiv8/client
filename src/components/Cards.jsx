@@ -15,7 +15,7 @@ export const RoomCard = ({ onPress, user, name, data }) => {
     <>
       <Card
         shadow="sm"
-        isPressable={user <= 2 && data.user[0].gender != genderCurrentUserLogin}
+        isPressable={user <= 2}
         onPress={onPress}
         className={user >= 2 ? "bg-slate-200" : ""}
       >
@@ -36,7 +36,7 @@ export const RoomCard = ({ onPress, user, name, data }) => {
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span className="text-xs">{user} Online</span>
+                <span className="text-xs">{user} Online {data.user[0]?.gender}</span>
               </div>
             </div>
           </div>

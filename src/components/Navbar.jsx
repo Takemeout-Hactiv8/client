@@ -13,6 +13,7 @@ export const Navbar = (props) => {
 
   const handleLogout = () => {
     localStorage.removeItem("username");
+    localStorage.removeItem("gender");
     toast.success("See you!!");
     nav("/");
   };

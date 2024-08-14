@@ -14,68 +14,27 @@ import { ThemeContext } from "../contexts/ThemeContext";
 import { useEffect, useState, useContext } from "react";
 import socket from "../socket";
 import { RoomContext } from "../contexts/RoomContext";
+import { toast } from "react-toastify";
 
 export default function Home() {
-  const { rooms, globalRooms, roomName, setRoomName, addRoom, joinRoom, joinGlobalRoom } = useContext(RoomContext);
-  const { theme, currentTheme, changeTheme } = useContext(ThemeContext);
+  const [genderCurrentUserLogin, setGenderCurrentUserLogin] = useState(null);
+  useEffect(() => {
+    const gender = localStorage.getItem("gender");
+    setGenderCurrentUserLogin(gender);
+  }, []);
+
+  const { rooms, globalRooms } = useContext(RoomContext);
+  const { theme, currentTheme } = useContext(ThemeContext);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const nav = useNavigate();
 
   const navigate = useNavigate();
-  //// const [message, setMessage] = useState("");
-  //// const [chatShow, setChatShow] = useState([]);
-
-  // const [roomName, setRoomName] = useState("");
-  // const [global, setGlobal] = useState([]);
-  // const [room, setRoom] = useState([]);
-
-  // const addRoom = (event) => {
-  //   event.preventDefault();
-
-  //   socket.emit("add-room", roomName);
-
-  //   navigate("/room/" + roomName);
-  // };
-
-  // const joinRoom = (room) => {
-  //   //// socket.emit('join-room', room)
-  //   navigate("/room/" + room);
-  // };
-
-  // useEffect(() => {
-  //   socket.disconnect();
-  //   socket.connect();
-
-  //   socket.on("newCome", (room) => {
-  //     console.log(room);
-  //     setRoom(room);
-  //   });
-
-  //   socket.on("globalRoom", (room) => {
-  //     setGlobal(room);
-  //   });
-
-  //   socket.on("update-room", (room) => {
-  //     setRoom(room);
-  //   });
-
-  //   socket.on("update-room-global", (room) => {
-  //     setGlobal(room);
-  //   });
-
-  //   return () => {
-  //     socket.off("newCome");
-  //     socket.off("chat-update");
-  //     socket.off("update-room");
-  //     socket.off("update-room-global");
-  //   };
-  // }, []);
 
   useEffect(() => {
     socket.disconnect();
     socket.connect();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -150,7 +109,32 @@ export default function Home() {
                     name={e.name}
                     user={e.user.length}
                     onPress={() => {
-                      e.user.length < 2 ? navigate("/private/" + e.name) : "";
+                      if (
+                        e.user.length < 2 &&
+                        e.user[0]?.gender === genderCurrentUserLogin
+                      ) {
+                        // Jika gender sama, tampilkan toast error
+                        toast.error(
+                          `Room is only for ${
+                            genderCurrentUserLogin === "male"
+                              ? "female"
+                              : "male"
+                          }`
+                        );
+                        console.log(e.user[0]?.gender, "dari server");
+                        console.log(
+                          genderCurrentUserLogin,
+                          "dari localstorage"
+                        );
+                      } else {
+                        // Jika gender berbeda, arahkan ke halaman lain
+                        navigate("/private/" + e.name);
+                        console.log(e.user[0]?.gender, "dari server");
+                        console.log(
+                          genderCurrentUserLogin,
+                          "dari localstorage"
+                        );
+                      }
                     }}
                     data={e}
                   />
