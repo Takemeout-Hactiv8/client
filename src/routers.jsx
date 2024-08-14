@@ -8,14 +8,14 @@ export const router = createBrowserRouter([
   {
     path: "/",
     loader: () => {
-      return localStorage.getItem("user") ? redirect("/home") : null;
+      return localStorage.getItem("username") ? redirect("/home") : null;
     },
     element: <Welcome />,
   },
   {
     element: <MainLayout />,
     loader: () => {
-      return !localStorage.getItem("user") ? redirect("/") : null;
+      return !localStorage.getItem("username") ? redirect("/") : null;
     },
     children: [
       {
