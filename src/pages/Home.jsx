@@ -12,12 +12,53 @@ import AddModal from "../components/Modal";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { useEffect, useState } from "react";
+import socket from "../socket";
 
 export default function Home() {
   const { theme, currentTheme, changeTheme } = useContext(ThemeContext)
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const nav = useNavigate();
+
+  const navigate = useNavigate()
+  // const [message, setMessage] = useState("");
+  // const [chatShow, setChatShow] = useState([]);
+  const [roomName, setRoomName] = useState("");
+  const [room, setRoom] = useState([]);
+
+  const addRoom = (event) => {
+    event.preventDefault();
+
+    socket.emit('add-room', roomName);
+
+    navigate('/room/'+roomName)
+  }
+
+  const joinRoom = (room) => {
+    // socket.emit('join-room', room)
+    navigate('/room/'+room)
+  }
+  
+  useEffect(() => {
+    socket.disconnect()
+    socket.connect()
+
+    socket.on('newCome', (room) => {
+      console.log(room)
+      setRoom(room)
+    });
+
+    socket.on('update-room', (room) => {
+      setRoom(room)
+    })
+
+    return () => {
+      socket.off('newCome');
+      socket.off('chat-update');
+      socket.off('update-room');
+    }
+  }, [])
   return (
     <>
       <section>
@@ -77,16 +118,15 @@ export default function Home() {
               </Button>
             </div>
             <div className="grid grid-cols-4 gap-7">
-              <RoomCard />
-              <RoomCard />
-              <RoomCard />
-              <RoomCard />
-              <RoomCard />
-              <RoomCard />
-              <RoomCard />
-              <RoomCard />
-              <RoomCard />
-              <RoomCard />
+              {room.map((e, i) => {
+                return <RoomCard 
+                  key={i} 
+                  name={e.name}
+                  user={e.user.length}
+                  onPress={() => navigate('/private/' + e.name)}
+                />
+              })}
+              
             </div>
             {/* kalo belom ada room */}
             {/* <div className="flex items-center justify-center">

@@ -1,13 +1,31 @@
 import { Button, Input } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ChatSender, { ChatReceiver } from "../components/Chat";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+import socket from "../socket";
 
 export default function Private() {
   const { theme, currentTheme, changeTheme } = useContext(ThemeContext)
   const [message, setMessage] = useState("");
+  const navigate = useNavigate()
+  const [chatShow, setChatShow] = useState([]);
+
+  const { roomName } = useParams();
+
+  const sendChat = (event) => {
+    event.preventDefault();
+
+    socket.emit('sendChat', message, roomName);
+
+    setMessage("");
+  }
+
+  const back = () => {
+    socket.emit('room-out', roomName)
+    navigate('/home')
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,6 +33,33 @@ export default function Private() {
     console.log(message);
     setMessage("");
   };
+
+  useEffect(() => {
+
+    // joinRoom();
+    socket.emit('join-room', roomName, socket.id);
+
+    socket.on('chat-update', (chat) => {
+      // chatTemp.push(chat);
+      setChatShow((lastValue) => {
+        console.log(chat)
+        return lastValue.concat(chat)
+      });
+    })
+
+    socket.on('room-user', (userOnline) => {
+      console.log(userOnline)
+    })
+
+    return () => {
+      socket.off('chat-update');
+      socket.off('update-room');
+      socket.off('join-room');
+      socket.off('room-user');
+    }
+  }, []);
+
+
   return (
     <>
       <section>
@@ -26,7 +71,7 @@ export default function Private() {
             </div>
             <Button
               as={Link}
-              to="/home"
+              onClick={back}
               isIconOnly
               color="danger"
               variant="flat"
