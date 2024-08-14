@@ -13,7 +13,7 @@ export default function Public() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate()
   const [chatShow, setChatShow] = useState([]);
-  const [user, setUser] = useState([]); 
+  const [user, setUser] = useState([]);
 
   const { roomName } = useParams();
 
@@ -39,7 +39,7 @@ export default function Public() {
   };
 
   useEffect(() => {
-
+    console.log(user, '====>user')
     // joinRoom();
     socket.emit('join-global', roomName, socket.id);
 
@@ -78,7 +78,7 @@ export default function Public() {
               }
             />
             {user.map((e, i) => {
-              return <UserList 
+              return <UserList
                 key={i}
                 name={e.name}
               />
@@ -103,12 +103,12 @@ export default function Public() {
             </div>
             <div className="flex flex-col gap-5 mb-5">
               <div className="w-full my-5 max-h-screen overflow-y-auto flex flex-col gap-5">
-              {chatShow.map((e, i) => {
-                return e.sender === socket.id ? 
-                <ChatSender key={i} message={e.chat}/> 
-                :
-                <ChatReceiver key={i} message={e.chat} name={e.name}/>
-              })}
+                {chatShow.map((e, i) => {
+                  return e.sender === socket.id ?
+                    <ChatSender key={i} message={e.chat} />
+                    :
+                    <ChatReceiver key={i} message={e.chat} name={e.name} />
+                })}
               </div>
               <div className="flex items-center gap-2">
                 <Input

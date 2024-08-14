@@ -60,7 +60,7 @@ export default function Private() {
       socket.off('room-user');
     }
   }, []);
-// ini comment
+  // ini comment
 
   return (
     <>
@@ -84,10 +84,10 @@ export default function Private() {
           <div className="flex flex-col gap-5 mb-5">
             <div className="w-full my-5 max-h-screen overflow-y-auto flex flex-col gap-5">
               {chatShow.map((e, i) => {
-                return e.sender === socket.id ? 
-                <ChatSender key={i} message={e.chat}/> 
-                :
-                <ChatReceiver key={i} message={e.chat} name={e.name}/>
+                return e.sender === socket.id ?
+                  <ChatSender key={i} message={e.chat} />
+                  :
+                  <ChatReceiver key={i} message={e.chat} name={e.name} />
               })}
             </div>
             <div className="flex items-center gap-2">

@@ -7,13 +7,15 @@ import {
   Button,
 } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-export const RoomCard = ({ onPress, user, name }) => {
+export const RoomCard = ({ onPress, user, name, data }) => {
   const nav = useNavigate();
+  const genderCurrentUserLogin = localStorage.getItem("gender")
+
   return (
     <>
       <Card
         shadow="sm"
-        isPressable={user <= 2}
+        isPressable={user <= 2 && data.user[0].gender != genderCurrentUserLogin}
         onPress={onPress}
         className={user >= 2 ? "bg-slate-200" : ""}
       >
