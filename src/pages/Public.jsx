@@ -87,7 +87,7 @@ export default function Public() {
           <div className="col-span-4 w-full">
             <div className="flex items-center justify-between bg-[#e5e5ff] p-5 rounded-xl">
               <div>
-                <h1 className={`text-3xl ${theme[currentTheme].textColorChat}`}>Design chat</h1>
+                <h1 className={`text-3xl ${theme[currentTheme].textColorChat}`}>{roomName}</h1>
                 <span className={`text-sm ${theme[currentTheme].textColorChat}`}>{user.length} online</span>
               </div>
               <Button
