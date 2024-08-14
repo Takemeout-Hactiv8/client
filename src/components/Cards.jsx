@@ -15,7 +15,7 @@ export const RoomCard = ({ onPress, user, name, data }) => {
     <>
       <Card
         shadow="sm"
-        isPressable={user <= 2}
+        isPressable={user < 2}
         onPress={onPress}
         className={user >= 2 ? "bg-slate-200" : ""}
       >

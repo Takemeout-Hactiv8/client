@@ -110,7 +110,6 @@ export default function Home() {
                     user={e.user.length}
                     onPress={() => {
                       if (
-                        e.user.length < 2 &&
                         e.user[0]?.gender === genderCurrentUserLogin
                       ) {
                         // Jika gender sama, tampilkan toast error
@@ -121,19 +120,9 @@ export default function Home() {
                               : "male"
                           }`
                         );
-                        console.log(e.user[0]?.gender, "dari server");
-                        console.log(
-                          genderCurrentUserLogin,
-                          "dari localstorage"
-                        );
                       } else {
                         // Jika gender berbeda, arahkan ke halaman lain
                         navigate("/private/" + e.name);
-                        console.log(e.user[0]?.gender, "dari server");
-                        console.log(
-                          genderCurrentUserLogin,
-                          "dari localstorage"
-                        );
                       }
                     }}
                     data={e}

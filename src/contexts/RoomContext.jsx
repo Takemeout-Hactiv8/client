@@ -48,7 +48,7 @@ export const RoomProvider = ({ children }) => {
 
         socket.on("update-room-global", (room) => {
             console.log("Room data global room updated:", room);
-            setRooms(room);
+            setGlobalRooms(room);
         });
 
         return () => {
@@ -56,7 +56,7 @@ export const RoomProvider = ({ children }) => {
             socket.off("globalRoom");
             socket.off("update-room");
             socket.off("update-room-global");
-            socket.disconnect();
+            // socket.disconnect();
         };
     }, []);
 
