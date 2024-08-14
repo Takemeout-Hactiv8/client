@@ -29,7 +29,8 @@ export default function Welcome() {
     if (!formData.username || !formData.gender) {
       toast.error("Please fill out all the fields");
     } else {
-      localStorage.setItem("user", JSON.stringify(formData));
+      localStorage.setItem("username", formData.username);
+      localStorage.setItem("gender", formData.gender);
       toast.success("Welcome " + formData.username);
       nav("/home");
     }

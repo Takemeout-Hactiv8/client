@@ -4,11 +4,11 @@ import { toast } from "react-toastify";
 import { Button } from "@nextui-org/react";
 
 export const Navbar = (props) => {
-  const isLogin = localStorage.getItem("user");
+  const isLogin = localStorage.getItem("username");
   const nav = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("username");
     toast.success("See you!!");
     nav("/");
   };
