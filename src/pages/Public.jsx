@@ -39,7 +39,7 @@ export default function Public() {
   };
 
   useEffect(() => {
-
+    console.log(user, '====>user')
     // joinRoom();
     socket.emit('join-global', roomName, socket.id);
 

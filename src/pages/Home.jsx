@@ -13,66 +13,75 @@ import { Link, useNavigate } from "react-router-dom";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { useEffect, useState, useContext } from "react";
 import socket from "../socket";
+import { RoomContext } from "../contexts/RoomContext";
 
 export default function Home() {
+  const { rooms, globalRooms, roomName, setRoomName, addRoom, joinRoom, joinGlobalRoom } = useContext(RoomContext);
   const { theme, currentTheme, changeTheme } = useContext(ThemeContext);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const nav = useNavigate();
 
   const navigate = useNavigate();
-  // const [message, setMessage] = useState("");
-  // const [chatShow, setChatShow] = useState([]);
-  const [roomName, setRoomName] = useState("");
-  const [global, setGlobal] = useState([]);
-  const [room, setRoom] = useState([]);
+  //// const [message, setMessage] = useState("");
+  //// const [chatShow, setChatShow] = useState([]);
 
-  const addRoom = (event) => {
-    event.preventDefault();
+  // const [roomName, setRoomName] = useState("");
+  // const [global, setGlobal] = useState([]);
+  // const [room, setRoom] = useState([]);
 
-    socket.emit("add-room", roomName);
+  // const addRoom = (event) => {
+  //   event.preventDefault();
 
-    navigate("/room/" + roomName);
-  };
+  //   socket.emit("add-room", roomName);
 
-  const joinRoom = (room) => {
-    // socket.emit('join-room', room)
-    navigate("/room/" + room);
-  };
+  //   navigate("/room/" + roomName);
+  // };
+
+  // const joinRoom = (room) => {
+  //   //// socket.emit('join-room', room)
+  //   navigate("/room/" + room);
+  // };
+
+  // useEffect(() => {
+  //   socket.disconnect();
+  //   socket.connect();
+
+  //   socket.on("newCome", (room) => {
+  //     console.log(room);
+  //     setRoom(room);
+  //   });
+
+  //   socket.on("globalRoom", (room) => {
+  //     setGlobal(room);
+  //   });
+
+  //   socket.on("update-room", (room) => {
+  //     setRoom(room);
+  //   });
+
+  //   socket.on("update-room-global", (room) => {
+  //     setGlobal(room);
+  //   });
+
+  //   return () => {
+  //     socket.off("newCome");
+  //     socket.off("chat-update");
+  //     socket.off("update-room");
+  //     socket.off("update-room-global");
+  //   };
+  // }, []);
 
   useEffect(() => {
     socket.disconnect();
     socket.connect();
+  }, [])
 
-    socket.on("newCome", (room) => {
-      console.log(room);
-      setRoom(room);
-    });
-
-    socket.on("globalRoom", (room) => {
-      setGlobal(room);
-    });
-
-    socket.on("update-room", (room) => {
-      setRoom(room);
-    });
-
-    socket.on("update-room-global", (room) => {
-      setGlobal(room);
-    });
-
-    return () => {
-      socket.off("newCome");
-      socket.off("chat-update");
-      socket.off("update-room");
-      socket.off("update-room-global");
-    };
-  }, []);
   return (
     <>
       <section>
         <div className="flex flex-col gap-12">
-          {global.map((e, i) => {
+          {globalRooms.map((e, i) => {
             return (
               <Card
                 key={i}
@@ -134,7 +143,7 @@ export default function Home() {
               </Button>
             </div>
             <div className="grid grid-cols-4 gap-7">
-              {room.map((e, i) => {
+              {rooms.map((e, i) => {
                 return (
                   <RoomCard
                     key={i}
@@ -143,12 +152,13 @@ export default function Home() {
                     onPress={() => {
                       e.user.length < 2 ? navigate("/private/" + e.name) : "";
                     }}
+                    data={e}
                   />
                 );
               })}
             </div>
             {/* kalo belom ada room */}
-            {room.length < 1 && (
+            {rooms.length < 1 && (
               <div className="flex items-center justify-center">
                 <h1> you dont have any rooms</h1>
               </div>
