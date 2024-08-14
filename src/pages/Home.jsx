@@ -9,10 +9,9 @@ import {
 import { RoomCard } from "../components/Cards";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AddModal from "../components/Modal";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useEffect } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { useEffect, useState } from "react";
 import socket from "../socket";
 
 export default function Home() {
