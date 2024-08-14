@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3000', {
+const socket = io('https://take-me-out.vivic.site/', {
     auth: (cb) => {
         cb({
             username: localStorage.username,
