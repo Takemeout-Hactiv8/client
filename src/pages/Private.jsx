@@ -2,14 +2,16 @@ import { Button, Input } from "@nextui-org/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import ChatSender, { ChatReceiver } from "../components/Chat";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export default function Private() {
+  const { theme, currentTheme, changeTheme } = useContext(ThemeContext)
   const [message, setMessage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!message) return;
+    if (!message) return;
     console.log(message);
     setMessage("");
   };
@@ -19,8 +21,8 @@ export default function Private() {
         <div className="col-span-4 w-full">
           <div className="flex items-center justify-between bg-[#e5e5ff] p-5 rounded-xl">
             <div>
-              <h1 className="text-3xl">Design chat private</h1>
-              <span className="text-sm">23 members, 10 online</span>
+              <h1 className={`text-3xl ${theme[currentTheme].textColorChat}`}>Design chat private</h1>
+              <span className={`text-sm ${theme[currentTheme].textColorChat}`}>23 members, 10 online</span>
             </div>
             <Button
               as={Link}

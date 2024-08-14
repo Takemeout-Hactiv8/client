@@ -2,8 +2,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
 import { Button } from "@nextui-org/react";
+import { useContext } from "react";
+import { ThemeContext } from "../contexts/ThemeContext";
 
 export const Navbar = (props) => {
+  const { theme, currentTheme, changeTheme } = useContext(ThemeContext)
+
   const isLogin = localStorage.getItem("user");
   const nav = useNavigate();
 
@@ -24,16 +28,24 @@ export const Navbar = (props) => {
                   Take Me<span className="font-bold text-red-500"> Out</span>
                 </Link>
               </h1>
-              {isLogin && (
-                <Button
-                  onPress={() => handleLogout()}
-                  variant="flat"
-                  color="danger"
-                  isIconOnly
+              <div className="flex items-center justify-between">
+                <Button style={{ height: "40px", marginRight: "10px" }}
+                  onClick={changeTheme}
+                  className={`bg-${theme[currentTheme].buttonColor} ${theme[currentTheme].buttonTextColor}`}
                 >
-                  <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
+                  Change Theme
                 </Button>
-              )}
+                {isLogin && (
+                  <Button
+                    onPress={() => handleLogout()}
+                    variant="flat"
+                    color="danger"
+                    isIconOnly
+                  >
+                    <FontAwesomeIcon icon="fa-solid fa-right-from-bracket" />
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         </nav>
