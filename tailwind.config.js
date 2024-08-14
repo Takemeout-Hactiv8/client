@@ -13,6 +13,7 @@ export default {
         'secondary': '#ff7a55',
         'white': '#f9fafc',
         'black': '#202022',
+        'dark': '#1a1a1a',
       },
       fontFamily: {
         sans: ['Poppins', 'sans-serif'],
