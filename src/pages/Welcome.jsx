@@ -10,9 +10,11 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { Switch } from "@nextui-org/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Welcome() {
-  const { theme, currentTheme, changeTheme } = useContext(ThemeContext)
+  const { theme, currentTheme, changeTheme } = useContext(ThemeContext);
 
   const nav = useNavigate();
   const [formData, setFormData] = useState({
@@ -39,20 +41,40 @@ export default function Welcome() {
   };
   return (
     <>
-      <div className={`container-fluid ${theme[currentTheme].backgroundColor} ${theme[currentTheme].textColor}`}>
-        <div className="p-4 flex flex-col items-center justify-center ">
-          <Button style={{ height: "40px" }}
-            onClick={changeTheme}
-            className={`bg-${theme[currentTheme].buttonColor} ${theme[currentTheme].buttonTextColor}`}
+      <section
+        className={`relative p-4 h-screen flex flex-col ${theme[currentTheme].backgroundColor} ${theme[currentTheme].textColor}`}
+      >
+        <div className="absolute top-4 right-4">
+          <Switch
+            defaultSelected
+            size="lg"
+            color="primary"
+            startContent={
+              <FontAwesomeIcon
+                icon="fa-solid fa-sun"
+                className="text-red-500"
+              />
+            }
+            endContent={
+              <FontAwesomeIcon
+                icon="fa-solid fa-moon"
+                className="text-red-500"
+              />
+            }
+            onValueChange={changeTheme}
           >
-            Change Theme
-          </Button>
+            <p className={`${theme[currentTheme].textColor}`}>{currentTheme === "light" ? "Dark Mode" : "Light Mode"}</p>
+          </Switch>
         </div>
-        <section className="p-4 h-screen flex flex-col items-center justify-center">
+        <div
+          className={`p-4 h-screen flex flex-col items-center justify-center ${theme[currentTheme].backgroundColor} ${theme[currentTheme].textColor}`}
+        >
           <div className="flex flex-col items-center justify-center gap-12">
             <div className="flex flex-col items-center justify-center gap-3">
               <h1 className="text-3xl">Welcome</h1>
-              <h1 className="text-2xl">Take Me<span className="font-bold text-red-500"> Out</span></h1>
+              <h1 className="text-2xl">
+                Take Me<span className="font-bold text-red-500"> Out</span>
+              </h1>
             </div>
             <div className="w-[500px]">
               <Card>
@@ -88,8 +110,8 @@ export default function Welcome() {
               </Card>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </>
   );
 }

@@ -1,15 +1,16 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toast } from "react-toastify";
-import { Button } from "@nextui-org/react";
+import { Button, Switch } from "@nextui-org/react";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 
 export const Navbar = (props) => {
-  const { theme, currentTheme, changeTheme } = useContext(ThemeContext)
+  const { theme, currentTheme, changeTheme } = useContext(ThemeContext);
 
   const isLogin = localStorage.getItem("user");
   const nav = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -22,20 +23,33 @@ export const Navbar = (props) => {
       <div className="flex flex-col">
         <nav className="flex justify-between items-center mb-10 py-4 border-b-2 border-slate-200">
           <div className="flex-grow">
-            <div className="flex items-center justify-between" >
+            <div className="flex items-center justify-between">
               <h1 className="text-3xl text-center">
                 <Link to="/home">
                   Take Me<span className="font-bold text-red-500"> Out</span>
                 </Link>
               </h1>
               <div className="flex items-center justify-between">
-                <Button style={{ height: "40px", marginRight: "10px" }}
-                  onClick={changeTheme}
-                  className={`bg-${theme[currentTheme].buttonColor} ${theme[currentTheme].buttonTextColor}`}
-                >
-                  Change Theme
-                </Button>
-                {isLogin && (
+                <Switch
+                  defaultSelected
+                  size="lg"
+                  color="primary"
+                  startContent={
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-sun"
+                      className="text-red-500"
+                    />
+                  }
+                  endContent={
+                    <FontAwesomeIcon
+                      icon="fa-solid fa-moon"
+                      className="text-red-500"
+                    />
+                  }
+                  onValueChange={changeTheme}
+                ></Switch>
+                {isLogin && location.pathname === "/home" && (
+                  // button logout
                   <Button
                     onPress={() => handleLogout()}
                     variant="flat"
