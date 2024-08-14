@@ -7,7 +7,7 @@ import { ThemeContext } from "../contexts/ThemeContext";
 
 export const Navbar = (props) => {
   const isLogin = localStorage.getItem("username");
-  const { theme, currentTheme, changeTheme } = useContext(ThemeContext)
+  const { theme, currentTheme, changeTheme } = useContext(ThemeContext);
   const nav = useNavigate();
   const location = useLocation();
 
@@ -24,9 +24,7 @@ export const Navbar = (props) => {
           <div className="flex-grow">
             <div className="flex items-center justify-between">
               <h1 className="text-3xl text-center">
-                <Link to="/home">
-                  Take Me<span className="font-bold text-red-500"> Out</span>
-                </Link>
+                Take Me<span className="font-bold text-red-500"> Out</span>
               </h1>
               <div className="flex items-center justify-between">
                 <Switch
