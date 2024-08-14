@@ -23,11 +23,11 @@ export const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/public",
+        path: "/public/:roomName",
         element: <Public />
       },
       {
-        path: "/private",
+        path: "/private/:roomName",
         element: <Private />
       },
     ],
