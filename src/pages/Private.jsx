@@ -11,6 +11,7 @@ export default function Private() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate()
   const [chatShow, setChatShow] = useState([]);
+  const [user, setUser] = useState([]);
 
   const { roomName } = useParams();
 
@@ -30,7 +31,8 @@ export default function Private() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!message) return;
-    console.log(message);
+    socket.emit('sendChat', message, roomName, localStorage.username);
+    // console.log(message);
     setMessage("");
   };
 
@@ -42,13 +44,13 @@ export default function Private() {
     socket.on('chat-update', (chat) => {
       // chatTemp.push(chat);
       setChatShow((lastValue) => {
-        console.log(chat)
+        // console.log(chat)
         return lastValue.concat(chat)
       });
     })
 
     socket.on('room-user', (userOnline) => {
-      console.log(userOnline)
+      setUser(userOnline.user)
     })
 
     return () => {
@@ -67,7 +69,7 @@ export default function Private() {
           <div className="flex items-center justify-between bg-[#e5e5ff] p-5 rounded-xl">
             <div>
               <h1 className={`text-3xl ${theme[currentTheme].textColorChat}`}>Design chat private</h1>
-              <span className={`text-sm ${theme[currentTheme].textColorChat}`}>23 members, 10 online</span>
+              <span className={`text-sm ${theme[currentTheme].textColorChat}`}>{user.length} online</span>
             </div>
             <Button
               as={Link}
@@ -81,10 +83,12 @@ export default function Private() {
           </div>
           <div className="flex flex-col gap-5 mb-5">
             <div className="w-full my-5 max-h-screen overflow-y-auto flex flex-col gap-5">
-              <ChatSender />
-              <ChatReceiver />
-              <ChatSender />
-              <ChatReceiver />
+              {chatShow.map((e, i) => {
+                return e.sender === socket.id ? 
+                <ChatSender key={i} message={e.chat}/> 
+                :
+                <ChatReceiver key={i} message={e.chat} name={e.name}/>
+              })}
             </div>
             <div className="flex items-center gap-2">
               <Input

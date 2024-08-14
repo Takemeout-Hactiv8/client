@@ -1,5 +1,5 @@
 import { Avatar, AvatarGroup, AvatarIcon, Badge } from "@nextui-org/react";
-export default function UserList() {
+export default function UserList({ name }) {
   return (
     <>
       <aside>
@@ -12,7 +12,7 @@ export default function UserList() {
             />
           </Badge>
           <div className="flex flex-col w-[300px]">
-            <span>Lofi girl</span>
+            <span>{name}</span>
             <p className="text-xs overflow-hidden whitespace-nowrap text-ellipsis w-[170px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores porro dicta tenetur quia. Obcaecati ipsam maiores harum, atque id a fugiat sequi omnis provident rerum, eveniet, fugit quod commodi itaque? Lorem ipsum, dolor sit amet consectetur adipisicing elit.</p>
           </div>
         </div>

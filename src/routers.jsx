@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
         element: <Home />
       },
       {
-        path: "/public",
+        path: "/public/:roomName",
         element: <Public />
       },
       {

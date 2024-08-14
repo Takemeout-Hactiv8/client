@@ -34,10 +34,6 @@ export const RoomCard = ( { onPress, user, name } ) => {
                 <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
                 <span className="text-xs">{user} Online</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-black"></div>
-                <span className="text-xs">940.000 Members</span>
-              </div>
             </div>
           </div>
           <p className="text-start text-default-500">
